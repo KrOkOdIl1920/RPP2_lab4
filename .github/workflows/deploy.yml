@@ -9,23 +9,23 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout repo
+    - name: Check repo
       uses: actions/checkout@v2
     
-    - name: Determine version from tag
+    - name: version from tag
       id: vars
       run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
     
     - name: Create versioned directory 
       run: mkdir -p "$VERSION"
     
-    - name: Copy HTML files to versioned directory 
+    - name: Copy to directory 
       run: |
         cp ./index.html "./$VERSION/index.html"
         cp ./ru.html "./$VERSION/ru.html"
         cp ./en.html "./$VERSION/en.html"
     
-    - name: Deploy to Github Pages 
+    - name: Deploy to Pages 
       uses: peaceiris/actions-gh-pages@v4 
       with:
         github_token: ${{ secrets.TOKENIC }}
