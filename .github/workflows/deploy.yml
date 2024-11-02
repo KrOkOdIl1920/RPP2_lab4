@@ -22,7 +22,7 @@ jobs:
     - name: Copy HTML files to versioned directory 
       run: |
         cp ./index.html "./$VERSION/index.html"
-        cp./ru.html "-/$VERSION/ru.html"
+        cp ./ru.html "-/$VERSION/ru.html"
         cp ./en.html "./$VERSION/en.html"
     
     - name: Deploy to Github Pages 
