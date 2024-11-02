@@ -7,22 +7,27 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Build
-        run: |
-          mkdir -p site/${{ github.event.release.tag_name }}
-          cp -r ru site/${{ github.event.release.tag_name }}/ru
-          cp -r en site/${{ github.event.release.tag_name }}/en
-          cp index.html site/${{ github.event.release.tag_name }}/index.html
-
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./site
-          publish_branch: gh-pages
-          keep_files: true
-          
+    - name: Checkout repo
+      uses: actions/checkout@v2
+    
+    - name: Determine version from tag
+      id: vars
+      run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+    
+    - name: Create versioned directory 
+      run: mkdir -p "SVERSION"
+    
+    - name: Copy HTML files to versioned directory 
+      run: |
+        cp ./index.html "./$VERSION/index.html"
+        cp./ru.html "-/$VERSION/ru.html"
+        cp ./en.html "./$VERSION/en.html"
+    
+    - name: Deploy to Github Pages 
+      uses: peaceiris/actions-gh-pages@v4 
+      with:
+        github_token: ${{ secrets. KATE_TOKEN }} 
+        publish_dir: ./ 
+        keep_files: true
