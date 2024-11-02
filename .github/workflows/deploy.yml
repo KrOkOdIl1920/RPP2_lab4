@@ -12,7 +12,7 @@ jobs:
     - name: Check repo
       uses: actions/checkout@v2
     
-    - name: version from tag
+    - name: Version from tag
       id: vars
       run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
     
